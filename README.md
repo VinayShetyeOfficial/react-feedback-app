@@ -19,7 +19,7 @@ This project is built using React and provides a user-friendly interface for col
 ## Installation
 1. Clone this repository:
   ```bash
-  git clone https://github.com/your-username/Feedback-App-Repo.git
+  git clone https://github.com/VinayShetyeOfficial/Feedback-App-Repo.git
   cd React_Feedback_App
   ```
 
