@@ -3,8 +3,6 @@
 
 ![Feedback-App](https://github.com/VinayShetyeOfficial/React_Feedback_App/assets/100470361/fefd6af0-4385-4e95-9e83-db23996ca440)
 
-
-
 ## Introduction
 Welcome to my Feedback-App Repo! <br>
 This project is built using React and provides a user-friendly interface for collecting feedback. Users can rate their experience, write comments, and submit feedback. Later, they can edit or delete their feedback items. Let’s dive into the details!
