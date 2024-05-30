@@ -10,7 +10,7 @@ This project is built using React and provides a user-friendly interface for col
 ## Features
 - **Rating System:** Users can rate their experience on a scale of 1 to 10.
 - **Feedback Text:** Users can write detailed feedback in the provided text box.
-- **Submission:** Click the “Send” button to submit feedback.
+- **Submission:** Click the “Send” button to submit feedback. 
 - **Editing:** Users can edit their feedback items.
 - **Deletion:** Users can delete feedback items from the list.
  
