@@ -13,7 +13,7 @@ This project is built using React and provides a user-friendly interface for col
 - **Submission:** Click the “Send” button to submit feedback.
 - **Editing:** Users can edit their feedback items.
 - **Deletion:** Users can delete feedback items from the list.
-
+ 
 ## Installation
 1. Clone this repository:
   ```bash
