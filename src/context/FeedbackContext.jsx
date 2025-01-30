@@ -1,75 +1,71 @@
-import { createContext, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import { createContext, useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+import FeedbackData from "../data/FeedbackData";
 
-const FeedbackContext = createContext()
+const FeedbackContext = createContext();
 
 export const FeedbackProvider = ({ children }) => {
-    const [feedback, setFeedback] = useState([
-        {
-            id: 1,
-            text: 'This is feedback item 1',
-            rating: 10,
-        },
-        {
-            id: 2,
-            text: 'This is feedback item 2',
-            rating: 3,
-        },
-        {
-            id: 3,
-            text: 'This is feedback item 3',
-            rating: 8,
-        }
-    ])
+  // Initialize state from localStorage or use first 3 items from FeedbackData
+  const [feedback, setFeedback] = useState(() => {
+    const savedFeedback = localStorage.getItem("feedback");
+    return savedFeedback ? JSON.parse(savedFeedback) : FeedbackData.slice(0, 3);
+  });
 
-    const [feedbackEdit, setFeedbackEdit] = useState({
-        item: {},
-        edit: false 
-    })
+  const [feedbackEdit, setFeedbackEdit] = useState({
+    item: {},
+    edit: false,
+  });
 
-    // Add Feedback
-    const addFeedback = (newFeedback) => {
-        newFeedback.id = uuidv4()
-        setFeedback([newFeedback, ...feedback])
+  // Save to localStorage whenever feedback changes
+  useEffect(() => {
+    localStorage.setItem("feedback", JSON.stringify(feedback));
+  }, [feedback]);
+
+  // Add Feedback
+  const addFeedback = (newFeedback) => {
+    newFeedback.id = uuidv4();
+    setFeedback([newFeedback, ...feedback]);
+  };
+
+  // Delete Feedback
+  const deleteFeedback = (id) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      setFeedback(feedback.filter((item) => item.id !== id));
     }
+  };
 
-    // Delete Feedback
-    const deleteFeedback = (id) => {
-        if (window.confirm('Are you sure you want to delete?')) {
-            setFeedback(feedback.filter((item) => item.id !== id))
-        }
-    }
-    
-    // Update feedback item
-    const updateFeedback = (id, updItem) => {
-        setFeedback(feedback.map((item) => item.id === id ? {
-            ...item, ...updItem}: item
-        ))
-    }
+  // Update feedback item
+  const updateFeedback = (id, updItem) => {
+    setFeedback(
+      feedback.map((item) => (item.id === id ? { ...item, ...updItem } : item))
+    );
+  };
 
-    // Set item to be updated
-    const editFeedback = (item) => {
-        setFeedbackEdit({
-            item: item,
-            edit: true
-        })
-    }
+  // Set item to be updated
+  const editFeedback = (item) => {
+    setFeedbackEdit({
+      item,
+      edit: true,
+    });
+  };
 
-    return (
-        <FeedbackContext.Provider value={{
-            //Data variables
-            feedback,
-            feedbackEdit,
-            updateFeedback,
+  return (
+    <FeedbackContext.Provider
+      value={{
+        //Data variables
+        feedback,
+        feedbackEdit,
+        updateFeedback,
 
-            //Functions
-            deleteFeedback,
-            addFeedback,
-            editFeedback,  
-        }}>
-            {children}
-        </FeedbackContext.Provider>
-    )
-}
+        //Functions
+        deleteFeedback,
+        addFeedback,
+        editFeedback,
+      }}
+    >
+      {children}
+    </FeedbackContext.Provider>
+  );
+};
 
-export default FeedbackContext
+export default FeedbackContext;
