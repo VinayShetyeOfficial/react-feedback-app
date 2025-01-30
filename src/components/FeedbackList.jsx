@@ -3,6 +3,21 @@ import { useContext, useState, useEffect } from "react";
 import FeedbackItem from "./FeedbackItem";
 import FeedbackContext from "../context/FeedbackContext";
 
+/**
+ * Component for displaying the list of feedback items.
+ *
+ * Features:
+ * - Animated feedback items using Framer Motion
+ * - Drag-to-reorder functionality
+ * - Empty state handling
+ * - Initial load animations
+ *
+ * Context Used:
+ * - FeedbackContext for feedback data
+ *
+ * Dependencies:
+ * - Framer Motion for animations
+ */
 function FeedbackList() {
   const { feedback, setFeedback } = useContext(FeedbackContext);
   const [isFirstLoad, setIsFirstLoad] = useState(true);

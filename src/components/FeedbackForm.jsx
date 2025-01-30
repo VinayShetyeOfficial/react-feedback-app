@@ -5,6 +5,24 @@ import FeedbackContext from "../context/FeedbackContext";
 import RatingSelect from "./RatingSelect";
 import { motion } from "framer-motion";
 
+/**
+ * Form component for submitting and editing feedback.
+ *
+ * Features:
+ * - Rating selection (1-10)
+ * - Text input with validation
+ * - Auto-resizing textarea
+ * - Submit/Edit functionality
+ *
+ * State:
+ * - text: string - Feedback text content
+ * - rating: number - Selected rating value
+ * - btnDisabled: boolean - Submit button state
+ * - message: string - Validation message
+ *
+ * Context Used:
+ * - FeedbackContext for CRUD operations
+ */
 function FeedbackForm() {
   const [text, setText] = useState("");
   const [rating, setRating] = useState(10);
@@ -14,6 +32,7 @@ function FeedbackForm() {
   const { addFeedback, feedbackEdit, updateFeedback } =
     useContext(FeedbackContext);
 
+  // Effect hook to handle editing mode
   useEffect(() => {
     if (feedbackEdit.edit === true) {
       setBtnDisabled(false);
@@ -22,11 +41,12 @@ function FeedbackForm() {
     }
   }, [feedbackEdit]);
 
+  // Handle text input changes and validation
   const handleTextChange = (e) => {
     const value = e.target.value;
     setText(value);
 
-    // Check text length and update button state
+    // Validate minimum text length
     if (value.trim().length >= 10) {
       setBtnDisabled(false);
       setMessage(null);
@@ -37,34 +57,40 @@ function FeedbackForm() {
       );
     }
 
-    // Auto-resize textarea
+    // Dynamic textarea height adjustment
     e.target.style.height = "auto";
     e.target.style.height = e.target.scrollHeight + "px";
 
-    // Check if content exceeds single line height (40px)
+    // Toggle multiline class based on content height
     const isMultiline = e.target.scrollHeight > 40;
     e.target.parentElement.classList.toggle("multiline", isMultiline);
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Final validation check
     if (text.trim().length < 10) {
       setMessage("Text must be at least 10 characters");
       setBtnDisabled(true);
       return;
     }
 
+    // Prepare feedback object
     const newFeedback = {
       text,
       rating,
     };
 
+    // Update or add feedback based on edit mode
     if (feedbackEdit.edit === true) {
       updateFeedback(feedbackEdit.item.id, newFeedback);
     } else {
       addFeedback(newFeedback);
     }
 
+    // Reset form state
     setText("");
     setBtnDisabled(true);
   };

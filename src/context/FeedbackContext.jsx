@@ -4,44 +4,76 @@ import FeedbackData from "../data/FeedbackData";
 
 const FeedbackContext = createContext();
 
+/**
+ * Context provider for managing feedback state across the application.
+ *
+ * Features:
+ * - Manages feedback data with localStorage persistence
+ * - Provides CRUD operations for feedback items
+ * - Handles feedback edit state
+ *
+ * Context Values:
+ * - feedback: array - Collection of feedback items
+ * - feedbackEdit: object - Current feedback item being edited
+ * - addFeedback: function(newFeedback) - Adds new feedback
+ * - deleteFeedback: function(id) - Removes feedback by id
+ * - updateFeedback: function(id, updItem) - Updates existing feedback
+ * - editFeedback: function(item) - Sets feedback item for editing
+ */
 export const FeedbackProvider = ({ children }) => {
-  // Initialize state from localStorage or use first 3 items from FeedbackData
+  // Initialize state with localStorage data or default
   const [feedback, setFeedback] = useState(() => {
-    const savedFeedback = localStorage.getItem("feedback");
-    return savedFeedback ? JSON.parse(savedFeedback) : FeedbackData.slice(0, 3);
+    try {
+      const savedFeedback = localStorage.getItem("feedback");
+      return savedFeedback
+        ? JSON.parse(savedFeedback)
+        : FeedbackData.slice(0, 3);
+    } catch (error) {
+      console.error("Error loading feedback from localStorage:", error);
+      return FeedbackData.slice(0, 3);
+    }
   });
 
+  // State for tracking feedback being edited
   const [feedbackEdit, setFeedbackEdit] = useState({
     item: {},
     edit: false,
   });
 
-  // Save to localStorage whenever feedback changes
+  // Persist feedback to localStorage on changes
   useEffect(() => {
-    localStorage.setItem("feedback", JSON.stringify(feedback));
+    try {
+      localStorage.setItem("feedback", JSON.stringify(feedback));
+    } catch (error) {
+      console.error("Error saving feedback to localStorage:", error);
+    }
   }, [feedback]);
 
-  // Add Feedback
+  // Add new feedback with unique ID
   const addFeedback = (newFeedback) => {
     newFeedback.id = uuidv4();
     setFeedback([newFeedback, ...feedback]);
   };
 
-  // Delete Feedback
+  // Delete feedback with confirmation
   const deleteFeedback = (id) => {
     if (window.confirm("Are you sure you want to delete?")) {
       setFeedback(feedback.filter((item) => item.id !== id));
     }
   };
 
-  // Update feedback item
+  // Update existing feedback
   const updateFeedback = (id, updItem) => {
     setFeedback(
       feedback.map((item) => (item.id === id ? { ...item, ...updItem } : item))
     );
+    // Reset edit mode
+    setFeedbackEdit({
+      item: {},
+      edit: false,
+    });
   };
 
-  // Set item to be updated
   const editFeedback = (item) => {
     setFeedbackEdit({
       item,
@@ -52,12 +84,9 @@ export const FeedbackProvider = ({ children }) => {
   return (
     <FeedbackContext.Provider
       value={{
-        //Data variables
         feedback,
         feedbackEdit,
         updateFeedback,
-
-        //Functions
         deleteFeedback,
         addFeedback,
         editFeedback,
