@@ -1,4 +1,4 @@
-# Feedback-App  [[Live Preview](https://superb-fudge-b88ad7.netlify.app/) ]
+# Feedback-App  [[Live Preview](https://feedback-app-live.netlify.app/)]
 
    
 ![image](https://github.com/user-attachments/assets/732a73f3-8d37-4534-a532-dae6844f3df6)
