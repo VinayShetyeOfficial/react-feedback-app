@@ -1,4 +1,4 @@
-# Feedback-App  [<a href="https://feedback-app-live.netlify.app/" target="_blank" rel="noopener noreferrer">Live Preview</a>]
+# Feedback-App  [[Live Preview](https://feedback-app-live.netlify.app/)]
    
 ![image](https://github.com/user-attachments/assets/909d9691-2b33-4787-846c-245032e5313b)
 
