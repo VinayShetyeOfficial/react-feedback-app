@@ -1,7 +1,6 @@
-# Feedback-App  
-[Live Preview](https://superb-fudge-b88ad7.netlify.app/) 
+# Feedback-App  [[Live Preview](https://feedback-app-live.netlify.app/)]
    
-![Feedback-App](https://github.com/VinayShetyeOfficial/React_Feedback_App/assets/100470361/fefd6af0-4385-4e95-9e83-db23996ca440)
+![image](https://github.com/user-attachments/assets/909d9691-2b33-4787-846c-245032e5313b)
 
 ## Introduction
 Welcome to my Feedback-App Repo! <br>
